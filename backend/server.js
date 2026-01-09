@@ -9,11 +9,11 @@ import postRoutes from "./routes/post.routes.js";
 import commentRoutes from "./routes/comment.routes.js";
 
 dotenv.config();
-connectDB();
+
 
 const app = express();
 
-app.use(express.json);
+app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
@@ -21,6 +21,12 @@ app.use(
     credentials: true,
   })
 );
+
+app.get("/", (req, res) => {
+  res.send("Backend running (MongoDB)");
+});
+
+connectDB();
 
 app.use("/auth", authRoutes);
 app.use("/posts", postRoutes);
