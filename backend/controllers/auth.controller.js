@@ -55,7 +55,7 @@ try{
 
   generateToken(res, user._id);
 
-  return res.status(201).json({
+  return res.status(200).json({
     id: user._id,
     name: user.name,
     email: user.email,
