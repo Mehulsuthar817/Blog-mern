@@ -24,14 +24,14 @@ export default function App() {
         <Route path="/register" element={<Register />} />
 
         {/* protected */}
-        {/* <Route
+        <Route
           path="/create"
           element={
             <ProtectedRoute>
               <CreateBlog />
             </ProtectedRoute>
           }
-        /> */}
+        />
       </Routes>
     </BrowserRouter>
   );

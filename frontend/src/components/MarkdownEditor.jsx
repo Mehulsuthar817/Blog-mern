@@ -3,17 +3,19 @@ import remarkGfm from "remark-gfm";
 
 export default function MarkdownEditor({ value, onChange }) {
   return (
-    <div className="grid grid-cols-2 gap-4 h-[80vh]">
+    <div className="grid grid-cols-2 gap-4 h-[70vh]">
+      {/* Editor */}
       <textarea
-        className="w-full p-4 bg-zinc-900 text-white rounded-xl resize-none"
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder="Write your blog in Markdown..."
+        className="w-full h-full p-4 border rounded resize-none font-mono"
       />
 
-      <div className="p-4 bg-white rounded-xl overflow-y-auto">
+      {/* Preview */}
+      <div className="p-4 border rounded overflow-y-auto prose max-w-none">
         <ReactMarkdown remarkPlugins={[remarkGfm]}>
-          {value}
+          {value || "_Nothing to preview yet_"}
         </ReactMarkdown>
       </div>
     </div>
