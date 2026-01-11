@@ -9,6 +9,7 @@ import CreateBlog from "./pages/CreateBlog";
 
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
+import EditBlog from "./pages/EditBlog";
 
 export default function App() {
   return (
@@ -31,6 +32,15 @@ export default function App() {
               <CreateBlog />
             </ProtectedRoute>
           }
+        />
+
+        <Route
+        path="/blogs/:id/edit"
+        element={
+          <ProtectedRoute>
+            <EditBlog/>
+          </ProtectedRoute>
+        }
         />
       </Routes>
     </BrowserRouter>

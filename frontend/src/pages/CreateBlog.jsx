@@ -15,8 +15,8 @@ export default function CreateBlog() {
     e.preventDefault();
     setError("");
 
-    if (!content.trim()) {
-      setError("Content is Required");
+    if (!content.trim() && !title.trim()) {
+      setError("Content and Title is Required");
       return;
     }
     try {

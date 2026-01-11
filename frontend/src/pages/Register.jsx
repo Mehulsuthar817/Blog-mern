@@ -19,10 +19,11 @@ export default function Register() {
 
   return (
     <>
-      <div>
-        <form onSubmit={submit}>
+      <div  className="min-h-screen flex items-center justify-center" >
+        <form className="w-full max-w-sm p-6 border rounded-xl space-y-4" onSubmit={submit}>
+          <h1 className="text-2xl font-bold text-center" >Register</h1>
           <input
-            className="iform"
+            className="w-full p-2 border rounded"
             type="text"
             placeholder="Name"
             onChange={(e) => {
@@ -31,7 +32,7 @@ export default function Register() {
           />
           <br />
           <input
-            className="iform"
+            className="w-full p-2 border rounded"
             type="email"
             placeholder="Email"
             onChange={(e) => {
@@ -40,7 +41,7 @@ export default function Register() {
           />
           <br />
           <input
-            className="iform"
+            className="w-full p-2 border rounded"
             type="password"
             placeholder="Password"
             onChange={(e) => {
@@ -48,7 +49,7 @@ export default function Register() {
             }}
           />
           <br />
-          <button type="submit">register</button>
+          <button className="w-full bg-black text-white py-2 rounded" type="submit">register</button>
         </form>
       </div>
     </>
