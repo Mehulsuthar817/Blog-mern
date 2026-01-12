@@ -25,10 +25,10 @@ export default function Home() {
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           
           {/* Left Content Section */}
-          <div className="space-y-10">
+          <div className=" max-w-[300px] lg:max-w-2xl space-y-10">
             {/* Main Heading with Blue/Cyan gradient to match floating lines */}
             <div className="space-y-2">
-              <h1 className="text-3xl lg:text-5xl font-black leading-[0.9] tracking-tight">
+              <h1 className="text-2xl max-w-[300px] lg:max-w-2xl  lg:text-5xl font-black leading-[0.9] tracking-tight">
                 <span className="md:block inline me-2 bg-gradient-to-r from-cyan-400 via-blue-400 to-cyan-300 bg-clip-text text-transparent">Write.</span>
                 <span className="md:block inline me-2 text-white">Think.</span>
                 <span className="md:block inline me-2 text-white">Build.</span>
@@ -97,10 +97,10 @@ export default function Home() {
             {/* Main image container */}
             <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-cyan-900/40">
               {/* Ambient glow effect matching floating lines */}
-              <div className="absolute -inset-8 bg-gradient-to-br from-cyan-600/30 via-blue-600/20 to-indigo-600/20 rounded-3xl blur-3xl opacity-60 group-hover:opacity-100 transition-opacity duration-700"></div>
+              <div className="absolute -inset-8 bg-linear-to-br from-cyan-600/30 via-blue-600/20 to-indigo-600/20 rounded-3xl blur-3xl opacity-60 group-hover:opacity-100 transition-opacity duration-700"></div>
               
               {/* Image */}
-              <div className="relative">
+              <div className=" lg:h-100 h-80 relative">
                 <img
                   className="w-full h-[400px] lg:h-[500px] object-cover transition-all duration-700 group-hover:scale-110"
                   src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=1200&h=800&fit=crop"
@@ -119,7 +119,7 @@ export default function Home() {
                 </div>
 
                 {/* Bottom info card with cyan accents */}
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0a0e1a] via-slate-900/95 to-transparent p-8 border-t border-cyan-500/10">
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0a0e1a] via-slate-900/95 to-transparent p-8">
                   <div className="space-y-3">
                     <div className="flex items-center gap-2 text-cyan-400 text-sm font-semibold">
                       <div className="w-1 h-1 bg-cyan-400 rounded-full shadow-lg shadow-cyan-400/50"></div>

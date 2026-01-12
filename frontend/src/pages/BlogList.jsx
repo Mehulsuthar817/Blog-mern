@@ -26,94 +26,114 @@ export default function BlogList() {
   
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-neutral-900 to-slate-950 flex items-center justify-center">
+      <div className="min-h-screen bg-[#0a0e1a] flex items-center justify-center">
         <div className="text-center space-y-4">
-          <div className="w-16 h-16 border-4 border-emerald-500/30 border-t-emerald-500 rounded-full animate-spin mx-auto"></div>
-          <p className="text-slate-400 text-lg">Loading articles...</p>
+          <div className="w-12 h-12 border-4 border-cyan-500/30 border-t-cyan-500 rounded-full animate-spin mx-auto"></div>
+          <p className="text-slate-400">Loading articles...</p>
         </div>
       </div>
     );
   }
   
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-neutral-900 to-slate-950 py-24 px-6">
-      {/* Background effects */}
-      <div className="absolute top-40 right-20 w-96 h-96 bg-emerald-900/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-40 left-20 w-96 h-96 bg-indigo-900/10 rounded-full blur-3xl"></div>
+    <div className="min-h-screen bg-[#0a0e1a] py-24 px-6">
+      {/* Subtle background effects */}
+      <div className="absolute top-40 right-20 w-96 h-96 bg-cyan-600/8 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-40 left-20 w-96 h-96 bg-blue-600/8 rounded-full blur-3xl"></div>
       
-      <div className="relative max-w-5xl mx-auto space-y-8">
+      <div className="relative max-w-6xl mx-auto space-y-8">
         {/* Header */}
-        <div className="space-y-4">
-          <h1 className="text-5xl lg:text-6xl font-black text-white">
-            All <span className="bg-gradient-to-r from-emerald-400 to-teal-400 bg-clip-text text-transparent">Blogs</span>
+        <div className="space-y-3">
+          <h1 className="text-4xl lg:text-5xl font-bold text-white">
+            All <span className="text-cyan-400">Articles</span>
           </h1>
-          <div className="h-1 w-24 bg-gradient-to-r from-emerald-400 to-teal-400 rounded-full"></div>
+          <div className="h-0.5 w-16 bg-cyan-400"></div>
         </div>
 
         {/* Empty State */}
         {posts.length === 0 && (
           <div className="text-center py-20">
-            <div className="w-20 h-20 bg-slate-800/50 rounded-full flex items-center justify-center mx-auto mb-4">
-              <svg className="w-10 h-10 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-16 h-16 bg-slate-800/50 rounded-full flex items-center justify-center mx-auto mb-4">
+              <svg className="w-8 h-8 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
               </svg>
             </div>
-            <p className="text-slate-500 text-lg">No posts yet</p>
-            <p className="text-slate-600 text-sm mt-2">Check back later for new content</p>
+            <p className="text-slate-500">No posts yet</p>
           </div>
         )}
 
-        {/* Blog Posts */}
-        <div className="space-y-4">
+        {/* Blog Posts Grid */}
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
           {posts.map((post) => (
             <Link
               key={post._id}
               to={`/blogs/${post._id}`}
-              className="group block relative"
+              className="group block"
             >
-              {/* Hover glow effect */}
-              <div className="absolute -inset-1 bg-gradient-to-r from-emerald-600/20 to-teal-600/20 rounded-2xl blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              
-              {/* Card */}
-              <div className="relative bg-slate-900/50 backdrop-blur-sm border border-slate-800/50 rounded-2xl p-6 hover:border-emerald-500/30 transition-all duration-300 group-hover:scale-[1.02]">
-                {/* Decorative corner accent */}
-                <div className="absolute top-0 right-0 w-20 h-20 border-t-2 border-r-2 border-emerald-500/20 rounded-tr-2xl"></div>
-                
-                <div className="space-y-3">
+              <div className="bg-slate-900/50 backdrop-blur-sm border border-slate-800/50 rounded-xl overflow-hidden hover:border-cyan-500/30 transition-all duration-300 h-full flex flex-col">
+                {/* Image */}
+                <div className="relative h-48 bg-gradient-to-br from-slate-800 to-slate-900 overflow-hidden">
+                  <img
+                    src={`https://source.unsplash.com/800x600/?coding,technology&sig=${post._id}`}
+                    alt={post.title}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent"></div>
+                  
+                  {/* Category Badge */}
+                  <div className="absolute top-3 left-3">
+                    <span className="px-3 py-1 bg-cyan-500/90 text-white text-xs font-semibold rounded-full">
+                      Technology
+                    </span>
+                  </div>
+                </div>
+
+                {/* Content */}
+                <div className="p-5 flex flex-col flex-grow">
                   {/* Title */}
-                  <h2 className="text-2xl font-bold text-white group-hover:text-emerald-400 transition-colors duration-300">
+                  <h2 className="text-lg font-bold text-white mb-2 line-clamp-2 group-hover:text-cyan-400 transition-colors">
                     {post.title || "Untitled post"}
                   </h2>
 
-                  {/* Author & Date */}
-                  <div className="flex items-center gap-4 text-sm">
+                  {/* Excerpt */}
+                  <p className="text-sm text-slate-400 mb-4 line-clamp-2 flex-grow">
+                    {post.content ? post.content.substring(0, 100) + '...' : 'Exploring the depths of technology and innovation...'}
+                  </p>
+
+                  {/* Footer */}
+                  <div className="flex items-center justify-between pt-3 border-t border-slate-800/50">
+                    {/* Author */}
                     <div className="flex items-center gap-2">
-                      <div className="w-8 h-8 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-full flex items-center justify-center">
+                      <div className="w-7 h-7 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
                         <span className="text-white text-xs font-bold">
                           {(post.author?.name || "U").charAt(0).toUpperCase()}
                         </span>
                       </div>
-                      <span className="text-slate-400 font-medium">
-                        {post.author?.name || "Unknown"}
-                      </span>
+                      <div className="min-w-0">
+                        <p className="text-xs text-slate-400 font-medium truncate">
+                          {post.author?.name || "Unknown"}
+                        </p>
+                        <p className="text-xs text-slate-500">
+                          {new Date(post.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                        </p>
+                      </div>
                     </div>
-                    
-                    <div className="h-4 w-px bg-slate-700"></div>
-                    
-                    <div className="flex items-center gap-2 text-slate-500">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-                      </svg>
-                      <span>{new Date(post.createdAt).toLocaleDateString()}</span>
-                    </div>
-                  </div>
 
-                  {/* Read more indicator */}
-                  <div className="flex items-center gap-2 text-emerald-400 text-sm font-semibold pt-2 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-                    <span>Read article</span>
-                    <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
-                    </svg>
+                    {/* Engagement Stats */}
+                    <div className="flex items-center gap-3 text-xs text-slate-500">
+                      <div className="flex items-center gap-1">
+                        <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+                        </svg>
+                        <span>{post.likes?.length || 0}</span>
+                      </div>
+                      <div className="flex items-center gap-1">
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+                        </svg>
+                        <span>{post.comments?.length || 0}</span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -122,29 +142,29 @@ export default function BlogList() {
         </div>
 
         {/* Pagination */}
-        <div className="flex items-center justify-center gap-4 pt-8">
+        <div className="flex items-center justify-center gap-3 pt-8">
           <button
-            className="group flex items-center gap-2 px-6 py-3 bg-slate-800/50 hover:bg-slate-800 border border-slate-700 hover:border-emerald-500/50 rounded-xl font-semibold text-white disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-slate-800/50 disabled:hover:border-slate-700 transition-all duration-300 hover:scale-105"
+            className="flex items-center gap-2 px-5 py-2.5 bg-slate-800/50 hover:bg-slate-800 border border-slate-700 hover:border-cyan-500/50 rounded-lg text-sm font-semibold text-white disabled:opacity-40 disabled:cursor-not-allowed transition-all"
             disabled={page === 1}
             onClick={() => setPage((p) => p - 1)}
           >
-            <svg className="w-5 h-5 group-hover:-translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
             </svg>
             Previous
           </button>
 
-          <div className="px-6 py-3 bg-emerald-500/10 border border-emerald-500/30 rounded-xl">
-            <span className="text-emerald-400 font-bold text-lg">{page}</span>
+          <div className="px-5 py-2.5 bg-cyan-500/10 border border-cyan-500/30 rounded-lg">
+            <span className="text-cyan-400 font-bold">{page}</span>
           </div>
 
           <button
-            className="group flex items-center gap-2 px-6 py-3 bg-slate-800/50 hover:bg-slate-800 border border-slate-700 hover:border-emerald-500/50 rounded-xl font-semibold text-white disabled:opacity-40 disabled:cursor-not-allowed disabled:hover:bg-slate-800/50 disabled:hover:border-slate-700 transition-all duration-300 hover:scale-105"
+            className="flex items-center gap-2 px-5 py-2.5 bg-slate-800/50 hover:bg-slate-800 border border-slate-700 hover:border-cyan-500/50 rounded-lg text-sm font-semibold text-white disabled:opacity-40 disabled:cursor-not-allowed transition-all"
             disabled={posts.length < limit}
             onClick={() => setPage((p) => p + 1)}
           >
             Next
-            <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
             </svg>
           </button>

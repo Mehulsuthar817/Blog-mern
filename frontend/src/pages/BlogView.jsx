@@ -58,208 +58,257 @@ export default function BlogView() {
   };
 
   const isOwner = user && post?.author?._id === user._id;
-  const isComOwn = user && commentpage.map((c) => c?.author._id === user._id);
-  console.log(isComOwn);
   
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-950 via-neutral-900 to-slate-950 flex items-center justify-center">
+      <div className="min-h-screen bg-[#0a0e1a] flex items-center justify-center">
         <div className="text-center space-y-4">
-          <div className="w-16 h-16 border-4 border-emerald-500/30 border-t-emerald-500 rounded-full animate-spin mx-auto"></div>
-          <p className="text-slate-400 text-lg">Loading article...</p>
+          <div className="w-12 h-12 border-4 border-cyan-500/30 border-t-cyan-500 rounded-full animate-spin mx-auto"></div>
+          <p className="text-slate-400">Loading article...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-950 via-neutral-900 to-slate-950 py-24 px-6">
-      {/* Background effects */}
-      <div className="absolute top-40 right-20 w-96 h-96 bg-emerald-900/10 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-40 left-20 w-96 h-96 bg-indigo-900/10 rounded-full blur-3xl"></div>
+    <div className="min-h-screen bg-[#0a0e1a]">
+      {/* Hero Section with Background Image */}
+      <div className="relative h-[500px] overflow-hidden">
+        {/* Background Image */}
+        <img
+          src={`https://source.unsplash.com/1920x1080/?technology,coding&sig=${id}`}
+          alt={post.title}
+          className="absolute inset-0 w-full h-full object-cover"
+        />
+        
+        {/* Dark Overlay */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0a0e1a]/60 via-[#0a0e1a]/80 to-[#0a0e1a]"></div>
 
-      <div className="relative max-w-4xl mx-auto">
-        {/* Article Header */}
-        <div className="bg-slate-900/50 backdrop-blur-sm border border-slate-800/50 rounded-3xl p-8 lg:p-12 mb-8">
-          {/* Decorative corner */}
-          <div className="absolute top-0 right-0 w-32 h-32 border-t-2 border-r-2 border-emerald-500/20 rounded-tr-3xl"></div>
-          
-          <div className="space-y-6">
-            {/* Title */}
-            <h1 className="text-4xl lg:text-5xl font-black text-white leading-tight">
-              {post.title}
-            </h1>
+        {/* Content */}
+        <div className="relative h-full max-w-4xl mx-auto px-6 flex flex-col justify-end pb-16">
+          {/* Back Button */}
+          <button
+            onClick={() => navigate('/blogs')}
+            className="absolute top-8 left-6 flex items-center gap-2 text-slate-300 hover:text-white transition-colors"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+            </svg>
+            <span className="text-sm font-medium">Back to stories</span>
+          </button>
 
-            {/* Author Info */}
-            <div className="flex items-center gap-3">
-              <div className="w-12 h-12 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-full flex items-center justify-center">
-                <span className="text-white font-bold text-lg">
-                  {(post.author?.name || "U").charAt(0).toUpperCase()}
-                </span>
-              </div>
-              <div>
-                <p className="text-white font-semibold">{post.author?.name || "Unknown"}</p>
-                <p className="text-slate-500 text-sm">
-                  {new Date(post.createdAt).toLocaleDateString('en-US', { 
-                    year: 'numeric', 
-                    month: 'long', 
-                    day: 'numeric' 
-                  })}
-                </p>
+          {/* Category Badge */}
+          <div className="mb-6">
+            <span className="px-3 py-1 bg-cyan-500 text-white text-sm font-semibold rounded">
+              Technology
+            </span>
+          </div>
+
+          {/* Title */}
+          <h1 className="text-4xl lg:text-5xl font-bold text-white leading-tight mb-4 max-w-3xl">
+            {post.title}
+          </h1>
+
+          {/* Subtitle/Excerpt */}
+          <p className="text-lg text-slate-300 mb-8 max-w-2xl">
+            {post.content ? post.content.substring(0, 150) + '...' : 'Exploring technology and innovation in depth.'}
+          </p>
+
+          {/* Author Info & Actions */}
+          <div className="flex items-center justify-between">
+            <div className="flex items-center gap-4">
+              {/* Author */}
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-full flex items-center justify-center">
+                  <span className="text-white font-bold">
+                    {(post.author?.name || "U").charAt(0).toUpperCase()}
+                  </span>
+                </div>
+                <div>
+                  <p className="text-white font-semibold">{post.author?.name || "Unknown"}</p>
+                  <p className="text-slate-400 text-sm flex items-center gap-2">
+                    {new Date(post.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
+                    <span>•</span>
+                    <span>6 min read</span>
+                  </p>
+                </div>
               </div>
             </div>
 
-            {/* Owner Actions */}
-            {isOwner && (
-              <div className="flex gap-3 pt-4">
+            {/* Action Buttons */}
+            <div className="flex items-center gap-3">
+              {user && (
                 <button
-                  onClick={() => navigate(`/blogs/${id}/edit`)}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 hover:border-emerald-500/50 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
+                  onClick={likePost}
+                  className="p-3 bg-slate-800/50 hover:bg-slate-800 backdrop-blur-sm rounded-full transition-colors"
+                  title="Like"
                 >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                  <svg className="w-5 h-5 text-slate-300" fill={post.likes?.some(like => like === user._id) ? "currentColor" : "none"} stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                   </svg>
-                  Edit
                 </button>
+              )}
+              
+              <button className="p-3 bg-slate-800/50 hover:bg-slate-800 backdrop-blur-sm rounded-full transition-colors" title="Bookmark">
+                <svg className="w-5 h-5 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                </svg>
+              </button>
+              
+              <button className="p-3 bg-slate-800/50 hover:bg-slate-800 backdrop-blur-sm rounded-full transition-colors" title="Share">
+                <svg className="w-5 h-5 text-slate-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z" />
+                </svg>
+              </button>
 
-                <button
-                  onClick={handleDelete}
-                  className="flex items-center gap-2 px-5 py-2.5 bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 hover:border-red-500/50 rounded-lg font-semibold transition-all duration-300 hover:scale-105"
-                >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                  </svg>
-                  Delete
-                </button>
-              </div>
-            )}
+              {isOwner && (
+                <>
+                  <button
+                    onClick={() => navigate(`/blogs/${id}/edit`)}
+                    className="p-3 bg-cyan-500/20 hover:bg-cyan-500/30 backdrop-blur-sm rounded-full transition-colors"
+                    title="Edit"
+                  >
+                    <svg className="w-5 h-5 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                    </svg>
+                  </button>
+
+                  <button
+                    onClick={handleDelete}
+                    className="p-3 bg-red-500/20 hover:bg-red-500/30 backdrop-blur-sm rounded-full transition-colors"
+                    title="Delete"
+                  >
+                    <svg className="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                  </button>
+                </>
+              )}
+            </div>
           </div>
         </div>
+      </div>
 
-        {/* Article Content */}
-        <article className="bg-slate-900/30 backdrop-blur-sm border border-slate-800/30 rounded-3xl p-8 lg:p-12 mb-8 prose prose-invert prose-slate prose-lg max-w-none
-          prose-headings:text-white prose-headings:font-bold
-          prose-p:text-slate-300 prose-p:leading-relaxed
-          prose-a:text-emerald-400 prose-a:no-underline hover:prose-a:text-emerald-300
+      {/* Article Content */}
+      <div className="max-w-3xl mx-auto px-6 py-12">
+        <article className="prose prose-invert prose-slate prose-lg max-w-none
+          prose-headings:text-white prose-headings:font-bold prose-headings:mb-4
+          prose-p:text-slate-300 prose-p:leading-relaxed prose-p:mb-6
+          prose-a:text-cyan-400 prose-a:no-underline hover:prose-a:text-cyan-300
           prose-strong:text-white prose-strong:font-bold
-          prose-code:text-emerald-400 prose-code:bg-slate-800/50 prose-code:px-2 prose-code:py-1 prose-code:rounded
-          prose-pre:bg-slate-800/50 prose-pre:border prose-pre:border-slate-700/50
-          prose-blockquote:border-l-emerald-500 prose-blockquote:text-slate-400
+          prose-code:text-cyan-400 prose-code:bg-slate-800/50 prose-code:px-2 prose-code:py-1 prose-code:rounded prose-code:text-sm
+          prose-pre:bg-slate-900/50 prose-pre:border prose-pre:border-slate-800
+          prose-blockquote:border-l-cyan-500 prose-blockquote:text-slate-400 prose-blockquote:italic
           prose-ul:text-slate-300 prose-ol:text-slate-300
-          prose-li:text-slate-300 text-white">
+          prose-li:text-slate-300 prose-li:mb-2
+          prose-img:rounded-xl prose-img:my-8 text-white ">
           <ReactMarkdown remarkPlugins={[remarkGfm]}>
             {post.content}
           </ReactMarkdown>
         </article>
 
-        {/* Engagement Section */}
-        <div className="bg-slate-900/50 backdrop-blur-sm border border-slate-800/50 rounded-3xl p-8 mb-8">
-          <div className="flex items-center gap-6">
-            {user && (
-              <button 
-                onClick={likePost} 
-                className="group flex items-center gap-3 px-6 py-3 bg-rose-500/10 hover:bg-rose-500/20 border border-rose-500/30 hover:border-rose-500/50 rounded-xl font-semibold text-rose-400 transition-all duration-300 hover:scale-105"
-              >
-                <svg className="w-6 h-6 group-hover:scale-110 transition-transform" fill="currentColor" viewBox="0 0 24 24">
-                  <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-                </svg>
-                Like
-              </button>
-            )}
-            <div className="flex items-center gap-2 text-slate-400">
-              <svg className="w-5 h-5 text-rose-400" fill="currentColor" viewBox="0 0 24 24">
-                <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
-              </svg>
-              <span className="font-semibold text-lg">{post.likes?.length || 0}</span>
-              <span>likes</span>
-            </div>
+        {/* Engagement Stats */}
+        <div className="flex items-center gap-6 py-8 border-y border-slate-800/50 mt-12">
+          <div className="flex items-center gap-2 text-slate-400">
+            <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+            </svg>
+            <span className="font-semibold">{post.likes?.length || 0}</span>
+            <span className="text-sm">likes</span>
+          </div>
+          <div className="flex items-center gap-2 text-slate-400">
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+            </svg>
+            <span className="font-semibold">{commentpage?.length || 0}</span>
+            <span className="text-sm">comments</span>
           </div>
         </div>
 
         {/* Comments Section */}
-        <div className="bg-slate-900/50 backdrop-blur-sm border border-slate-800/50 rounded-3xl p-8">
-          <h2 className="text-2xl font-bold text-white mb-6 flex items-center gap-3">
-            <svg className="w-7 h-7 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-            </svg>
-            Comments
-            <span className="text-sm font-normal text-slate-500">({commentpage?.length || 0})</span>
+        <div className="mt-12">
+          <h2 className="text-2xl font-bold text-white mb-6">
+            Comments ({commentpage?.length || 0})
           </h2>
 
-          {/* Empty State */}
-          {commentpage?.length === 0 && (
-            <div className="text-center py-12">
-              <div className="w-16 h-16 bg-slate-800/50 rounded-full flex items-center justify-center mx-auto mb-4">
-                <svg className="w-8 h-8 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
-                </svg>
+          {/* Comment Form */}
+          {user ? (
+            <form onSubmit={addComment} className="mb-8">
+              <div className="flex gap-3">
+                <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+                  <span className="text-white font-bold text-sm">
+                    {(user.name || "U").charAt(0).toUpperCase()}
+                  </span>
+                </div>
+                <div className="flex-1">
+                  <input
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                    placeholder="Write a comment..."
+                    className="w-full bg-slate-900/50 border border-slate-800 focus:border-cyan-500/50 rounded-lg px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-cyan-500/20 transition-all"
+                  />
+                  <div className="flex justify-end mt-2">
+                    <button 
+                      type="submit"
+                      className="px-5 py-2 bg-cyan-500 hover:bg-cyan-400 text-white text-sm font-semibold rounded-lg transition-colors"
+                    >
+                      Post Comment
+                    </button>
+                  </div>
+                </div>
               </div>
-              <p className="text-slate-500">No comments yet</p>
-              <p className="text-slate-600 text-sm mt-1">Be the first to share your thoughts</p>
+            </form>
+          ) : (
+            <div className="text-center py-8 border border-slate-800 rounded-xl mb-8">
+              <p className="text-slate-400 mb-3">Sign in to join the conversation</p>
+              <button 
+                onClick={() => navigate('/login')}
+                className="px-5 py-2 bg-cyan-500 hover:bg-cyan-400 text-white text-sm font-semibold rounded-lg transition-colors"
+              >
+                Sign In
+              </button>
             </div>
           )}
 
           {/* Comments List */}
-          <div className="space-y-4 mb-6">
-            {commentpage?.map((c) => (
-              <div key={c._id} className="bg-slate-800/30 border border-slate-700/30 rounded-xl p-5 hover:border-slate-700/50 transition-colors">
-                <div className="flex items-start justify-between mb-3">
-                  <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-teal-500 rounded-full flex items-center justify-center flex-shrink-0">
-                      <span className="text-white font-bold text-sm">
-                        {(c.author?.name || "U").charAt(0).toUpperCase()}
-                      </span>
-                    </div>
-                    <div>
-                      <p className="text-white font-semibold">{c.author?.name || "User"}</p>
-                      <p className="text-slate-500 text-xs">
-                        {new Date(c.createdAt).toLocaleDateString()}
-                      </p>
-                    </div>
-                  </div>
-
-                  {c.author?._id === user?._id && (
-                    <button
-                      onClick={async () => {
-                        if (!confirm("Delete this comment?")) return;
-                        await api.delete(`comments/${c._id}`);
-                        fetchcomment();
-                      }}
-                      className="text-red-400 hover:text-red-300 transition-colors p-2 hover:bg-red-500/10 rounded-lg"
-                    >
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
-                      </svg>
-                    </button>
-                  )}
-                </div>
-                <p className="text-slate-300 leading-relaxed pl-13">{c.content}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Comment Form */}
-          {user ? (
-            <form onSubmit={addComment} className="flex gap-3">
-              <input
-                value={comment}
-                onChange={(e) => setComment(e.target.value)}
-                placeholder="Write a comment..."
-                className="flex-1 bg-slate-800/50 border border-slate-700/50 focus:border-emerald-500/50 rounded-xl px-5 py-3 text-white placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 transition-all"
-              />
-              <button className="px-6 py-3 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-xl transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-emerald-500/30">
-                Send
-              </button>
-            </form>
+          {commentpage?.length === 0 ? (
+            <div className="text-center py-12 text-slate-500">
+              <p>No comments yet. Be the first to comment!</p>
+            </div>
           ) : (
-            <div className="text-center py-8 border-t border-slate-800/50">
-              <p className="text-slate-500 mb-3">Login to like and comment</p>
-              <button 
-                onClick={() => navigate('/login')}
-                className="px-6 py-2.5 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-bold rounded-lg transition-all duration-300 hover:scale-105"
-              >
-                Login
-              </button>
+            <div className="space-y-6">
+              {commentpage?.map((c) => (
+                <div key={c._id} className="flex gap-3">
+                  <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-blue-500 rounded-full flex items-center justify-center flex-shrink-0">
+                    <span className="text-white font-bold text-sm">
+                      {(c.author?.name || "U").charAt(0).toUpperCase()}
+                    </span>
+                  </div>
+                  <div className="flex-1">
+                    <div className="flex items-center justify-between mb-1">
+                      <div>
+                        <span className="text-white font-semibold text-sm">{c.author?.name || "User"}</span>
+                        <span className="text-slate-500 text-xs ml-2">
+                          {new Date(c.createdAt).toLocaleDateString()}
+                        </span>
+                      </div>
+                      {c.author?._id === user?._id && (
+                        <button
+                          onClick={async () => {
+                            if (!confirm("Delete this comment?")) return;
+                            await api.delete(`comments/${c._id}`);
+                            fetchcomment();
+                          }}
+                          className="text-slate-500 hover:text-red-400 transition-colors text-xs"
+                        >
+                          Delete
+                        </button>
+                      )}
+                    </div>
+                    <p className="text-slate-300 text-sm leading-relaxed">{c.content}</p>
+                  </div>
+                </div>
+              ))}
             </div>
           )}
         </div>
