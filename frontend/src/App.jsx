@@ -14,7 +14,7 @@ import EditBlog from "./pages/EditBlog";
 export default function App() {
   return (
     <BrowserRouter>
-      <Navbar />
+      <Navbar/>
 
       <Routes>
         {/* public */}

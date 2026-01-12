@@ -9,11 +9,16 @@ export default function MarkdownEditor({ value, onChange }) {
         value={value}
         onChange={(e) => onChange(e.target.value)}
         placeholder="Write your blog in Markdown..."
-        className="w-full h-full p-4 border rounded resize-none font-mono"
+        className=" text-white w-full h-full p-4 border rounded resize-none font-mono"
       />
 
       {/* Preview */}
-      <div className="p-4 border rounded overflow-y-auto prose max-w-none">
+      <div
+        className="p-4 text-white
+      
+      
+  border rounded overflow-y-auto prose max-w-none"
+      >
         <ReactMarkdown remarkPlugins={[remarkGfm]}>
           {value || "_Nothing to preview yet_"}
         </ReactMarkdown>
