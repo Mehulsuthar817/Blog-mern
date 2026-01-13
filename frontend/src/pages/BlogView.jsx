@@ -4,6 +4,7 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
+import readingTime from "../utils/readingTime";
 
 export default function BlogView() {
   const { id } = useParams();
@@ -129,7 +130,7 @@ export default function BlogView() {
                   <p className="text-slate-400 text-sm flex items-center gap-2">
                     {new Date(post.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' })}
                     <span>•</span>
-                    <span>6 min read</span>
+                    <span>{readingTime(post.content)}</span>
                   </p>
                 </div>
               </div>

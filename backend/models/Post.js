@@ -15,6 +15,10 @@ const postSchema = new mongoose.Schema(
       ref: "User",
       requred: true,
     },
+    views: {
+      type: Number,
+      default: 0,
+    },
     likes: [
       {
         type: mongoose.Schema.Types.ObjectId,
@@ -22,7 +26,14 @@ const postSchema = new mongoose.Schema(
       },
     ],
   },
-  { timestamps: true }
+  { timestamps: true, toJSON: { virtual: true }, toObject: { virtual: true } }
 );
 
-export default mongoose.model("Post",postSchema);
+postSchema.virtual("commentCount", {
+  ref: "Comment",
+  localField: "_id",
+  foreignField: "post",
+  count: true,
+});
+
+export default mongoose.model("Post", postSchema);

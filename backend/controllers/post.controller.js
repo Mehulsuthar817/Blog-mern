@@ -1,3 +1,4 @@
+import Comment from "../models/Comment.js";
 import Post from "../models/Post.js";
 
 export const createPost = async (req, res) => {
@@ -39,15 +40,23 @@ export const getPosts = async (req, res) => {
 
     const posts = await Post.find(query)
       .populate("author", "name email")
+      .populate("commentCount")
       .sort({ createdAt: -1 })
       .skip((page - 1) * limit)
       .limit(limit);
 
+    const postWithCounts = await Promise.all(
+      posts.map(async (p) => {
+        const count = await Comment({ post: p._id });
+        return {commentCount: count };
+      })
+    );
     res.json({
       page,
       totalPages: Math.ceil(total / limit),
       totalPosts: total,
       posts,
+      postWithCounts,
     });
   } catch (err) {
     console.log("GET POSTS ERROR:", err);
@@ -65,7 +74,8 @@ export const getPostById = async (req, res) => {
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
-
+    Post.views += 1;
+    await post.save();
     res.json(post);
   } catch (err) {
     console.error("GET POST ERROR:", err);
