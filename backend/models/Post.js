@@ -26,7 +26,7 @@ const postSchema = new mongoose.Schema(
       },
     ],
   },
-  { timestamps: true, toJSON: { virtual: true }, toObject: { virtual: true } }
+  { timestamps: true, toJSON: { virtuals: true }, toObject: { virtuals: true } }
 );
 
 postSchema.virtual("commentCount", {

@@ -45,22 +45,26 @@ export const getPosts = async (req, res) => {
       .skip((page - 1) * limit)
       .limit(limit);
 
-    const postWithCounts = await Promise.all(
-      posts.map(async (p) => {
-        const count = await Comment({ post: p._id });
-        return {commentCount: count };
-      })
-    );
     res.json({
       page,
       totalPages: Math.ceil(total / limit),
       totalPosts: total,
       posts,
-      postWithCounts,
     });
   } catch (err) {
     console.log("GET POSTS ERROR:", err);
     return res.status(500).json({ message: "Server error" });
+  }
+};
+
+export const getPostByUser = async (req, res) => {
+  try {
+    const posts = (await Post.find({ author: req.params.id })).sort({
+      createdAt: -1,
+    });
+    res.json(posts);
+  } catch (err) {
+    res.status(500).json({ message: "server error" });
   }
 };
 
@@ -74,7 +78,7 @@ export const getPostById = async (req, res) => {
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
-    Post.views += 1;
+    post.views += 1;
     await post.save();
     res.json(post);
   } catch (err) {

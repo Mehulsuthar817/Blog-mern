@@ -13,31 +13,21 @@ export default function BlogList() {
     try {
       setLoading(true);
       const res = await api.get(`/posts?page=${page}&limit=${limit}`);
-      setPost(res.data);
-      console.log(res.data);
+      setPost(res.data.posts);
     } catch (err) {
       console.error(err);
     } finally {
       setLoading(false);
     }
   };
-  const fetchcomment = async () => {
-    const res = await api.get(
-      `comments/posts/6965328f9813c30e8e64095a/comments`
-    );
-    console.log(res);
-  };
 
-  // const normalisedPosts = async data.flatMap(block=>block.posts.map(post=>({
-  //   ...post,
-  //   commentCount: block.commentCounts
-  // })))
+
 
   useEffect(() => {
     fetchPost();
-    fetchcomment();
+
   }, [page]);
-  console.log(posts);
+ 
 
   if (loading) {
     return (
@@ -66,7 +56,7 @@ export default function BlogList() {
         </div>
 
         {/* Empty State */}
-        {posts.posts.length === 0 && (
+        {posts.length === 0 && (
           <div className="text-center py-20">
             <div className="w-16 h-16 bg-slate-800/50 rounded-full flex items-center justify-center mx-auto mb-4">
               <svg
@@ -89,7 +79,7 @@ export default function BlogList() {
 
         {/* Blog Posts Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {posts.posts.map((post) => (
+          {posts.map((post) => (
             <Link
               key={post._id}
               to={`/blogs/${post._id}`}
@@ -220,7 +210,7 @@ export default function BlogList() {
 
           <button
             className="flex items-center gap-2 px-5 py-2.5 bg-slate-800/50 hover:bg-slate-800 border border-slate-700 hover:border-cyan-500/50 rounded-lg text-sm font-semibold text-white disabled:opacity-40 disabled:cursor-not-allowed transition-all"
-            disabled={posts.posts.length < limit}
+            disabled={posts.length < limit}
             onClick={() => setPage((p) => p + 1)}
           >
             Next

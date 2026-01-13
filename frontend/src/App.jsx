@@ -10,11 +10,12 @@ import CreateBlog from "./pages/CreateBlog";
 import Navbar from "./components/Navbar";
 import ProtectedRoute from "./components/ProtectedRoute";
 import EditBlog from "./pages/EditBlog";
+import Profile from "./pages/Profile";
 
 export default function App() {
   return (
     <BrowserRouter>
-      <Navbar/>
+      <Navbar />
 
       <Routes>
         {/* public */}
@@ -23,6 +24,7 @@ export default function App() {
         <Route path="/blogs/:id" element={<BlogView />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/profile/:id" element={<Profile />} />
 
         {/* protected */}
         <Route
@@ -35,12 +37,12 @@ export default function App() {
         />
 
         <Route
-        path="/blogs/:id/edit"
-        element={
-          <ProtectedRoute>
-            <EditBlog/>
-          </ProtectedRoute>
-        }
+          path="/blogs/:id/edit"
+          element={
+            <ProtectedRoute>
+              <EditBlog />
+            </ProtectedRoute>
+          }
         />
       </Routes>
     </BrowserRouter>
