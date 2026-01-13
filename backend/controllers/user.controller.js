@@ -16,6 +16,8 @@ export const getUserProfile = async (req, res) => {
 
     // 2. Get user's posts
     const posts = await Post.find({ author: userId })
+    .populate("commentCount")
+    .populate("likes")
       .sort({ createdAt: -1 })
       .select("title createdAt views");
 

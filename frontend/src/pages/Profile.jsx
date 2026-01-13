@@ -23,6 +23,7 @@ export default function Profile() {
     };
     fetchProfile();
   }, [id]);
+  
 
   if (loading) {
     return (
@@ -52,7 +53,7 @@ export default function Profile() {
 
   const { user: profileUser, posts, totalPosts } = profile;
   const isOwnProfile = user && user._id === profileUser._id;
-
+console.log(posts);
   return (
     <div className="min-h-screen bg-[#0a0e1a]">
       {/* Back Button */}
@@ -124,7 +125,7 @@ export default function Profile() {
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 8h10M7 12h4m1 8l-4-4H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-3l-4 4z" />
                   </svg>
-                  <span className="text-2xl font-bold">{posts.reduce((acc, p) => acc + (p.comments?.length || 0), 0)}</span>
+                  <span className="text-2xl font-bold">{posts.reduce((acc, p) => acc + (p.commentCount || 0), 0)}</span>
                 </div>
                 <p className="text-xs text-slate-500">Comments</p>
               </div>
