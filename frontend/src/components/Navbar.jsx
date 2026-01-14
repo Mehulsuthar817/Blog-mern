@@ -25,10 +25,10 @@ export default function Navbar() {
           <div className="absolute -inset-[1px] rounded-full bg-gradient-to-r from-cyan-500/0 via-cyan-400/30 to-cyan-500/0 blur-sm"></div>
           <div className="absolute inset-0 rounded-full shadow-[inset_0_1px_1px_rgba(255,255,255,0.3),inset_0_-1px_1px_rgba(0,0,0,0.2)]"></div>
           
-          <div className="relative flex items-center justify-between px-6 py-3">
+          <div className="  relative flex items-center justify-between px-6 py-3">
             {/* Logo */}
             <Link 
-              className="relative group text-lg font-bold tracking-tight z-10" 
+              className="relative group text-sm md:text-lg font-bold tracking-tight z-10" 
               to="/"
             >
               <span className="bg-gradient-to-r from-cyan-300 to-blue-300 bg-clip-text text-transparent drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">
@@ -40,7 +40,7 @@ export default function Navbar() {
             <div className="flex items-center gap-4 z-10">
               {/* Blogs Link */}
               <Link
-                className="relative text-slate-100 hover:text-white text-sm font-medium transition-all duration-200 group drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]"
+                className="relative text-slate-100 hover:text-white text-sm md:text-sm font-medium transition-all duration-200 group drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]"
                 to="/blogs"
               >
                 Blogs
@@ -51,7 +51,7 @@ export default function Navbar() {
                 <>
                   {/* Write Button */}
                   <Link 
-                    className="glass-button flex items-center gap-2 px-4 py-2 text-cyan-200 text-sm font-semibold transition-all duration-300" 
+                    className="glass-button flex items-center gap-2 px-2 py-1 md:px-4 md:py-2 text-cyan-200 text-sm font-semibold transition-all duration-300" 
                     to="/create"
                   >
                     <PenLine className="w-3.5 h-3.5" />
@@ -59,7 +59,7 @@ export default function Navbar() {
                   </Link>
 
                   {/* User Profile */}
-                  <div className="glass-button  flex items-center gap-2 px-3 py-2">
+                  <div className="glass-button px-2 py-1 md:px-4 md:py-2 flex items-center gap-2">
                     <div className="w-1.5 h-1.5 bg-cyan-300 rounded-full animate-pulse shadow-[0_0_8px_rgba(34,211,238,0.8)]"></div>
                     <Link to={`/profile/${user._id}`} ><span className=" text-white text-sm font-medium drop-shadow-[0_2px_4px_rgba(0,0,0,0.5)]">{user.name}</span></Link>
                     
@@ -67,7 +67,7 @@ export default function Navbar() {
 
                   {/* Logout Button */}
                   <button
-                    className="glass-button px-4 py-2 text-white text-sm font-semibold transition-all duration-300"
+                    className="glass-button px-2 py-1 md:px-4 md:py-2 text-white text-sm font-semibold transition-all duration-300"
                     onClick={handleLogout}
                   >
                     Logout

@@ -1,10 +1,27 @@
 import FloatingLines from '../components/FloatingLines.jsx';
+import { useAuth } from '../context/AuthContext.jsx';
+import { useNavigate } from 'react-router-dom';
 
 export default function Home() {
+  const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleWriteClick = () => {
+    if (user) {
+      navigate('/create');
+    } else {
+      navigate('/login');
+    }
+  };
+
+  const handleReadClick = () => {
+    navigate('/blogs');
+  };
+
   return (
     <div className="min-h-screen bg-[#0a0e1a] relative overflow-hidden">
       {/* Floating Lines Background - Primary Layer */}
-      <div className="absolute inset-0 opacity-40">
+      <div className="absolute inset-0 opacity-40 pointer-events-none">
         <FloatingLines 
           enabledWaves={['top', 'middle', 'bottom']}
           lineCount={[10, 15, 20]}
@@ -17,9 +34,39 @@ export default function Home() {
       </div>
 
       {/* Enhanced ambient effects to blend with floating lines */}
-      <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-blue-600/10 rounded-full blur-3xl mix-blend-screen"></div>
-      <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-cyan-600/8 rounded-full blur-3xl mix-blend-screen"></div>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-600/8 rounded-full blur-3xl mix-blend-screen"></div>
+      <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-blue-600/10 rounded-full blur-3xl mix-blend-screen pointer-events-none"></div>
+      <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-cyan-600/8 rounded-full blur-3xl mix-blend-screen pointer-events-none"></div>
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-600/8 rounded-full blur-3xl mix-blend-screen pointer-events-none"></div>
+
+      {/* Mouse tracking layer - captures mouse events for FloatingLines */}
+      <div 
+        className="absolute inset-0 z-0"
+        onPointerMove={(e) => {
+          // Dispatch a custom event that FloatingLines can listen to
+          const rect = e.currentTarget.getBoundingClientRect();
+          const event = new PointerEvent('pointermove', {
+            bubbles: true,
+            cancelable: true,
+            clientX: e.clientX,
+            clientY: e.clientY
+          });
+          
+          // Find the canvas and dispatch event to it
+          const canvas = document.querySelector('.floating-lines-container canvas');
+          if (canvas) {
+            canvas.dispatchEvent(event);
+          }
+        }}
+        onPointerLeave={(e) => {
+          const canvas = document.querySelector('.floating-lines-container canvas');
+          if (canvas) {
+            canvas.dispatchEvent(new PointerEvent('pointerleave', {
+              bubbles: true,
+              cancelable: true
+            }));
+          }
+        }}
+      />
 
       <div className="relative max-w-5xl mx-auto px-6 py-12 mt-18 lg:py-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -48,7 +95,9 @@ export default function Home() {
 
             {/* Action Buttons with cyan/blue theme */}
             <div className="flex gap-4 pt-4">
-              <button className="group relative px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white font-bold text-sm rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/50 overflow-hidden">
+              <button 
+                onClick={handleReadClick}
+                className="group relative px-4 py-2 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-400 hover:to-blue-400 text-white font-bold text-sm rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-cyan-500/50 overflow-hidden">
                 <span className="relative z-10 flex items-center gap-1">
                   Read
                   <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -58,7 +107,9 @@ export default function Home() {
                 <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-cyan-400 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               </button>
 
-              <button className="group px-6 py-3 bg-slate-900/50 hover:bg-slate-800/70 backdrop-blur-xl border-2 border-slate-700/50 hover:border-cyan-500/50 text-white font-bold text-sm rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/20">
+              <button
+                onClick={handleWriteClick}
+                className="group px-6 py-3 bg-slate-900/50 hover:bg-slate-800/70 backdrop-blur-xl border-2 border-slate-700/50 hover:border-cyan-500/50 text-white font-bold text-sm rounded-lg transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-cyan-500/20">
                 <span className="flex items-center gap-2">
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
@@ -67,37 +118,18 @@ export default function Home() {
                 </span>
               </button>
             </div>
-
-            {/* Stats Section with cyan/blue accents */}
-            {/* <div className="grid grid-cols-3 gap-6 pt-8">
-              <div className="space-y-2 group cursor-pointer">
-                <div className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">247</div>
-                <div className="text-sm text-slate-400 uppercase tracking-wider">Articles</div>
-                <div className="h-px bg-gradient-to-r from-cyan-400/50 via-blue-400/30 to-transparent group-hover:from-cyan-400 transition-all duration-300"></div>
-              </div>
-              <div className="space-y-2 group cursor-pointer">
-                <div className="text-4xl font-bold bg-gradient-to-r from-blue-400 to-cyan-400 bg-clip-text text-transparent">12k</div>
-                <div className="text-sm text-slate-400 uppercase tracking-wider">Readers</div>
-                <div className="h-px bg-gradient-to-r from-blue-400/50 via-cyan-400/30 to-transparent group-hover:from-blue-400 transition-all duration-300"></div>
-              </div>
-              <div className="space-y-2 group cursor-pointer">
-                <div className="text-4xl font-bold bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">∞</div>
-                <div className="text-sm text-slate-400 uppercase tracking-wider">Ideas</div>
-                <div className="h-px bg-gradient-to-r from-cyan-400/50 via-blue-400/30 to-transparent group-hover:from-cyan-400 transition-all duration-300"></div>
-              </div>
-            </div> */}
           </div>
 
           {/* Right Image Section */}
           <div className=" relative group lg:order-last">
             {/* Decorative corner frames with cyan/blue */}
-            <div className="absolute -top-6 -left-6 w-28 h-28 border-t-4 border-l-4 border-cyan-500/40 rounded-tl-3xl shadow-lg shadow-cyan-500/20"></div>
-            <div className="absolute -bottom-6 -right-6 w-32 h-32 border-b-4 border-r-4 border-blue-500/40 rounded-br-3xl shadow-lg shadow-blue-500/20"></div>
+            <div className="absolute -top-6 -left-6 w-28 h-28 border-t-4 border-l-4 border-cyan-500/40 rounded-tl-3xl shadow-lg shadow-cyan-500/20 pointer-events-none"></div>
+            <div className="absolute -bottom-6 -right-6 w-32 h-32 border-b-4 border-r-4 border-blue-500/40 rounded-br-3xl shadow-lg shadow-blue-500/20 pointer-events-none"></div>
 
             {/* Main image container */}
             <div className="relative rounded-3xl overflow-hidden shadow-2xl shadow-cyan-900/40">
               {/* Ambient glow effect matching floating lines */}
-              <div className="absolute -inset-8 bg-linear-to-br from-cyan-600/30 via-blue-600/20 to-indigo-600/20 rounded-3xl blur-3xl opacity-60 group-hover:opacity-100 transition-opacity duration-700"></div>
+              <div className="absolute -inset-8 bg-linear-to-br from-cyan-600/30 via-blue-600/20 to-indigo-600/20 rounded-3xl blur-3xl opacity-60 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
               
               {/* Image */}
               <div className=" lg:h-100 h-80 relative">
@@ -108,10 +140,10 @@ export default function Home() {
                 />
                 
                 {/* Dark gradient overlay with blue tint */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0e1a] via-blue-950/20 to-transparent"></div>
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0e1a] via-blue-950/20 to-transparent pointer-events-none"></div>
                 
                 {/* Top corner accent with cyan theme */}
-                <div className="absolute top-8 right-8">
+                <div className="absolute top-8 right-8 pointer-events-none">
                   <div className="flex items-center gap-2 px-4 py-2 bg-slate-900/80 backdrop-blur-md border border-cyan-500/30 rounded-full shadow-lg shadow-cyan-500/20">
                     <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse shadow-lg shadow-cyan-400/50"></div>
                     <span className="text-white text-sm font-medium">Active</span>
@@ -119,7 +151,7 @@ export default function Home() {
                 </div>
 
                 {/* Bottom info card with cyan accents */}
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0a0e1a] via-slate-900/95 to-transparent p-8">
+                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0a0e1a] via-slate-900/95 to-transparent p-8 pointer-events-none">
                   <div className="space-y-3">
                     <div className="flex items-center gap-2 text-cyan-400 text-sm font-semibold">
                       <div className="w-1 h-1 bg-cyan-400 rounded-full shadow-lg shadow-cyan-400/50"></div>
@@ -137,8 +169,8 @@ export default function Home() {
             </div>
 
             {/* Floating accent elements with cyan/blue colors */}
-            <div className="absolute top-1/2 -left-12 w-24 h-24 bg-cyan-500/15 rounded-full blur-2xl animate-float"></div>
-            <div className="absolute bottom-1/4 -right-12 w-32 h-32 bg-blue-500/15 rounded-full blur-2xl animate-float-delayed"></div>
+            <div className="absolute top-1/2 -left-12 w-24 h-24 bg-cyan-500/15 rounded-full blur-2xl animate-float pointer-events-none"></div>
+            <div className="absolute bottom-1/4 -right-12 w-32 h-32 bg-blue-500/15 rounded-full blur-2xl animate-float-delayed pointer-events-none"></div>
           </div>
         </div>
 
