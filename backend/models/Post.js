@@ -19,6 +19,19 @@ const postSchema = new mongoose.Schema(
       type: Number,
       default: 0,
     },
+    coverPhoto: {
+      type: String,
+      required: true,
+    },
+    excerpt: {
+      type: String,
+      required: true,
+    },
+    category: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     likes: [
       {
         type: mongoose.Schema.Types.ObjectId,

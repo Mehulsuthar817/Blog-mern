@@ -21,13 +21,9 @@ export default function BlogList() {
     }
   };
 
-
-
   useEffect(() => {
     fetchPost();
-
   }, [page]);
- 
 
   if (loading) {
     return (
@@ -39,7 +35,7 @@ export default function BlogList() {
       </div>
     );
   }
-
+  console.log(posts);
   return (
     <div className="min-h-screen bg-[#0a0e1a] py-24 px-6">
       {/* Subtle background effects */}
@@ -89,7 +85,7 @@ export default function BlogList() {
                 {/* Image */}
                 <div className="relative h-48 bg-gradient-to-br from-slate-800 to-slate-900 overflow-hidden">
                   <img
-                    src={`https://source.unsplash.com/800x600/?coding,technology&sig=${post._id}`}
+                    src={`${post.coverPhoto}`}
                     alt={post.title}
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                   />

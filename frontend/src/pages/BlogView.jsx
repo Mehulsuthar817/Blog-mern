@@ -77,7 +77,7 @@ export default function BlogView() {
       <div className="relative h-[500px] overflow-hidden">
         {/* Background Image */}
         <img
-          src={`https://source.unsplash.com/1920x1080/?technology,coding&sig=${id}`}
+          src={`${post.coverPhoto}`}
           alt={post.title}
           className="absolute inset-0 w-full h-full object-cover"
         />

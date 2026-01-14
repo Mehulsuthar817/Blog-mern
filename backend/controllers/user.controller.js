@@ -14,12 +14,12 @@ export const getUserProfile = async (req, res) => {
       return res.status(404).json({ message: "User not found" });
     }
 
+
     // 2. Get user's posts
     const posts = await Post.find({ author: userId })
+    .sort({ createdAt: -1 })
     .populate("commentCount")
-    .populate("likes")
-      .sort({ createdAt: -1 })
-      .select("title createdAt views");
+    .select("title createdAt views likes");
 
     res.json({
       user,
@@ -31,3 +31,30 @@ export const getUserProfile = async (req, res) => {
     res.status(500).json({ message: "server error" });
   }
 };
+
+export const updateProfile = async (req, res) => {
+  try {
+    const userId = req.params.id;
+//     console.log("REQ USER:", req.user.id);
+// console.log("PARAM ID:", userId);
+    // only self-update
+    if (req.user.id !== userId) {
+      return res.status(403).json({ message: "Not authorized" });
+    }
+
+
+    const { name, bio } = req.body;
+
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { name, bio },
+      { new: true, runValidators: true }
+    ).select("name email bio avatar createdAt");
+
+    res.json(user);
+  } catch (err) {
+    console.error("UPDATE PROFILE ERROR:", err);
+    res.status(500).json({ message: "server error" });
+  }
+};
+

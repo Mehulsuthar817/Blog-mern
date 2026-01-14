@@ -3,7 +3,7 @@ import Post from "../models/Post.js";
 
 export const createPost = async (req, res) => {
   try {
-    const { title, content } = req.body;
+    const { title, content,coverPhoto } = req.body;
     if (!title || !content) {
       return res
         .status(400)
@@ -12,7 +12,8 @@ export const createPost = async (req, res) => {
     const post = await Post.create({
       title,
       content,
-      author: req.user,
+      coverPhoto,
+      author: req.user.id,
     });
     return res.status(200).json(post);
   } catch (err) {
@@ -39,7 +40,7 @@ export const getPosts = async (req, res) => {
     const total = await Post.countDocuments(query);
 
     const posts = await Post.find(query)
-      .populate("author", "name email")
+      .populate("author", "name email coverPhoto")
       .populate("commentCount")
       .sort({ createdAt: -1 })
       .skip((page - 1) * limit)
@@ -142,7 +143,7 @@ export const toggleLikePost = async (req, res) => {
       return res.status(400).json({ message: "post not found" });
     }
 
-    const userId = req.user;
+    const userId = req.user.id;
 
     const alreadyLiked = post.likes.some((id) => id.toString() === userId);
 
