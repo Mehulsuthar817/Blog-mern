@@ -70,7 +70,7 @@ export default function Profile() {
   const { user: profileUser, posts, totalPosts } = profile;
 
   const isOwnProfile = user && user._id === profileUser._id;
-  
+  console.log(profile);
 
   const handleSave = async () => {
     try {
@@ -85,7 +85,6 @@ export default function Profile() {
       console.error("UPDATE PROFILE ERROR", err);
     }
   };
-
 
   return (
     <div className="min-h-screen bg-[#0a0e1a]">

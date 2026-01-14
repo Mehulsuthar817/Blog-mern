@@ -94,7 +94,7 @@ export default function BlogList() {
                   {/* Category Badge */}
                   <div className="absolute top-3 left-3">
                     <span className="px-3 py-1 bg-cyan-500/90 text-white text-xs font-semibold rounded-full">
-                      Technology
+                      {post.category}
                     </span>
                   </div>
                 </div>
@@ -108,9 +108,7 @@ export default function BlogList() {
 
                   {/* Excerpt */}
                   <p className="text-sm text-slate-400 mb-4 line-clamp-2 flex-grow">
-                    {post.content
-                      ? post.content.substring(0, 100) + "..."
-                      : "Exploring the depths of technology and innovation..."}
+                    {post.excerpt}
                   </p>
 
                   {/* Footer */}
@@ -132,10 +130,11 @@ export default function BlogList() {
                             { month: "short", day: "numeric", year: "numeric" }
                           )}
                         </p>
-                        <p className="text-xs text-slate-500">
+                        <p className=" inline text-xs text-slate-500">
                           {readingTime(post.content)}
                         </p>
-                        <p className="text-xs text-slate-500">
+                        <p className=" inline text-xs text-slate-500">
+                          {"  "}
                           {post.views} views
                         </p>
                       </div>

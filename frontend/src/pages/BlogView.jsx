@@ -111,7 +111,7 @@ export default function BlogView() {
           {/* Category Badge */}
           <div className="mb-6">
             <span className="px-3 py-1 bg-cyan-500 text-white text-sm font-semibold rounded">
-              Technology
+              {post.category}
             </span>
           </div>
 
@@ -122,9 +122,7 @@ export default function BlogView() {
 
           {/* Subtitle/Excerpt */}
           <p className="text-lg text-slate-300 mb-8 max-w-2xl">
-            {post.content
-              ? post.content.substring(0, 150) + "..."
-              : "Exploring technology and innovation in depth."}
+            {post.excerpt}
           </p>
 
           {/* Author Info & Actions */}

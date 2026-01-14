@@ -9,7 +9,7 @@ export const addComment = async (req, res) => {
 
     const comment = await Comment.create({
       content,
-      author: req.user,
+      author: req.user.id,
       post: req.params.id,
     });
     res.status(200).json(comment);
@@ -27,7 +27,7 @@ export const deleteComment = async (req, res) => {
       return res.status(404).json({ message: "comment not found" });
     }
 
-    if (comment.author.toString() !== req.user) {
+    if (comment.author.toString() !== req.user.id) {
       return res.status(404).json({ message: "Not Authorised" });
     }
     await comment.deleteOne();
