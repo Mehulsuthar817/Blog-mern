@@ -36,7 +36,7 @@ export default function BlogList() {
     );
   }
   return (
-    <div className="w-full max-w-full bg-[#0a0e1a] py-24 px-6">
+    <div className="w-full max-w-5xl bg-[#0a0e1a] py-24 px-6">
       {/* Subtle background effects */}
       <div className="absolute top-40 right-20 w-100 h-96 bg-cyan-600/8 rounded-full blur-3xl"></div>
       <div className="absolute bottom-40 left-20 w-10 h-96 bg-blue-600/8 rounded-full blur-3xl"></div>
