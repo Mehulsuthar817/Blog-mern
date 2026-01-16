@@ -47,10 +47,10 @@ export default function CreateBlog() {
 
   if (showPreview) {
     return (
-      <div className="min-h-screen bg-[#0a0e1a]">
+      <div className="min-h-screen w-full bg-[#0a0e1a]">
         {/* Subtle background effects */}
-        <div className="absolute top-40 right-20 w-96 h-96 bg-cyan-600/8 rounded-full blur-3xl"></div>
-        <div className="absolute bottom-40 left-20 w-96 h-96 bg-blue-600/8 rounded-full blur-3xl"></div>
+        <div className="absolute top-40 right-20 w-100 h-96 bg-cyan-600/8 rounded-full blur-3xl"></div>
+        <div className="absolute bottom-40 left-20 w-10 h-96 bg-blue-600/8 rounded-full blur-3xl"></div>
 
         <div className="relative max-w-4xl mx-auto px-6 py-24">
           <button
@@ -90,7 +90,7 @@ export default function CreateBlog() {
             prose-pre:bg-slate-800/50 prose-pre:border prose-pre:border-slate-700/50
             prose-blockquote:border-l-cyan-500 prose-blockquote:text-slate-400
             prose-ul:text-slate-300 prose-ol:text-slate-300
-            prose-li:text-slate-300">
+            prose-li:text-slate-300 text-white ">
             <ReactMarkdown>{content || "*No content yet...*"}</ReactMarkdown>
           </div>
         </div>
@@ -101,8 +101,8 @@ export default function CreateBlog() {
   return (
     <div className="min-h-screen bg-[#0a0e1a] py-24 px-6">
       {/* Subtle background effects */}
-      <div className="absolute top-40 right-20 w-96 h-96 bg-cyan-600/8 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-40 left-20 w-96 h-96 bg-blue-600/8 rounded-full blur-3xl"></div>
+      <div className="absolute top-40 right-20 w-100 h-96 bg-cyan-600/8 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-40 left-20 w-10 h-96 bg-blue-600/8 rounded-full blur-3xl"></div>
 
       <div className="relative max-w-3xl mx-auto">
         {/* Header */}

@@ -153,14 +153,14 @@ export default function BlogView() {
                       {post.author?.name || "Unknown"}
                     </Link>
                   </p>
-                  <p className="text-slate-400 text-sm flex items-center gap-2">
+                  <p className=" block text-slate-400 text-sm md:flex items-center gap-2">
                     {new Date(post.createdAt).toLocaleDateString("en-US", {
                       year: "numeric",
                       month: "short",
                       day: "numeric",
                     })}
-                    <span>•</span>
-                    <span>{readingTime(post.content)}</span>
+                    <span className="md:block hidden ">•</span>
+                    <span className="block md:inline ">{readingTime(post.content)}</span>
                   </p>
                 </div>
               </div>
