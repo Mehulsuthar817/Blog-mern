@@ -17,7 +17,7 @@ app.use(express.json());
 app.use(cookieParser());
 app.use(
   cors({
-    origin: "https://myblog-livid-five.vercel.app/",
+    origin: "https://myblog-livid-five.vercel.app",
     credentials: true,
   })
 );
