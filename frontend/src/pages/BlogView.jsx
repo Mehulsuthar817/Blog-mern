@@ -1,21 +1,30 @@
 import { useEffect, useRef, useState } from "react";
-import { Link, Navigate, useNavigate, useParams } from "react-router-dom";
+import {
+  Link,
+  Navigate,
+  useLocation,
+  useNavigate,
+  useParams,
+} from "react-router-dom";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import api from "../api/axios";
 import { useAuth } from "../context/AuthContext";
 import readingTime from "../utils/readingTime";
+import BackButton from "../components/BackButtons";
 
 export default function BlogView() {
   const { id } = useParams();
   const { user } = useAuth();
   const hasfetched = useRef(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [post, setPost] = useState(null);
   const [comment, setComment] = useState("");
   const [loading, setLoading] = useState(true);
   const [commentpage, setCommentPage] = useState([]);
+  const back = location.state?.from || "/blogs";
 
   const fetchPost = async () => {
     const res = await api.get(`/posts/${id}`);
@@ -86,10 +95,11 @@ export default function BlogView() {
         <div className="absolute inset-0 bg-gradient-to-b from-[#0a0e1a]/60 via-[#0a0e1a]/80 to-[#0a0e1a]"></div>
 
         {/* Content */}
-        <div className="relative h-full max-w-4xl mx-auto px-6 flex flex-col justify-end pb-16">
+        <div className=" mt-15 relative h-full max-w-4xl mx-auto px-6 flex flex-col justify-end pb-16">
           {/* Back Button */}
+
           <button
-            onClick={() => navigate("/blogs")}
+            onClick={() => navigate(back)}
             className="absolute top-8 left-6 flex items-center gap-2 text-slate-300 hover:text-white transition-colors"
           >
             <svg
@@ -183,44 +193,6 @@ export default function BlogView() {
                   </svg>
                 </button>
               )}
-
-              <button
-                className="p-3 bg-slate-800/50 hover:bg-slate-800 backdrop-blur-sm rounded-full transition-colors"
-                title="Bookmark"
-              >
-                <svg
-                  className="w-5 h-5 text-slate-300"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
-                  />
-                </svg>
-              </button>
-
-              <button
-                className="p-3 bg-slate-800/50 hover:bg-slate-800 backdrop-blur-sm rounded-full transition-colors"
-                title="Share"
-              >
-                <svg
-                  className="w-5 h-5 text-slate-300"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M8.684 13.342C8.886 12.938 9 12.482 9 12c0-.482-.114-.938-.316-1.342m0 2.684a3 3 0 110-2.684m0 2.684l6.632 3.316m-6.632-6l6.632-3.316m0 0a3 3 0 105.367-2.684 3 3 0 00-5.367 2.684zm0 9.316a3 3 0 105.368 2.684 3 3 0 00-5.368-2.684z"
-                  />
-                </svg>
-              </button>
 
               {isOwner && (
                 <>

@@ -19,9 +19,9 @@ export default function Home() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0a0e1a] relative overflow-hidden">
+    <div className="  min-h-screen bg-[#0a0e1a] relative overflow-hidden">
       {/* Floating Lines Background - Primary Layer */}
-      <div className="absolute inset-0 opacity-40 pointer-events-none">
+      <div className=" absolute inset-0 opacity-40 pointer-events-none">
         <FloatingLines 
           enabledWaves={['top', 'middle', 'bottom']}
           lineCount={[10, 15, 20]}
@@ -33,17 +33,15 @@ export default function Home() {
         />
       </div>
 
-      {/* Enhanced ambient effects to blend with floating lines */}
-      <div className="absolute top-0 right-0 w-[700px] h-[700px] bg-blue-600/10 rounded-full blur-3xl mix-blend-screen pointer-events-none"></div>
-      <div className="absolute bottom-0 left-0 w-[800px] h-[800px] bg-cyan-600/8 rounded-full blur-3xl mix-blend-screen pointer-events-none"></div>
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-indigo-600/8 rounded-full blur-3xl mix-blend-screen pointer-events-none"></div>
+
+
 
       {/* Mouse tracking layer - captures mouse events for FloatingLines */}
       <div 
-        className="absolute inset-0 z-0"
+        className="absolute inset-0 z-0  "
         onPointerMove={(e) => {
           // Dispatch a custom event that FloatingLines can listen to
-          const rect = e.currentTarget.getBoundingClientRect();
+          
           const event = new PointerEvent('pointermove', {
             bubbles: true,
             cancelable: true,
@@ -57,7 +55,7 @@ export default function Home() {
             canvas.dispatchEvent(event);
           }
         }}
-        onPointerLeave={(e) => {
+        onPointerLeave={() => {
           const canvas = document.querySelector('.floating-lines-container canvas');
           if (canvas) {
             canvas.dispatchEvent(new PointerEvent('pointerleave', {
@@ -68,11 +66,11 @@ export default function Home() {
         }}
       />
 
-      <div className="relative max-w-5xl mx-auto px-6 py-12 mt-18 lg:py-20">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+      <div className=" md:h-100 h-180 relative max-w-5xl mx-auto px-6 py-12 mt-18 lg:py-20">
+        <div className="  grid lg:grid-cols-2 gap-12 items-center">
           
           {/* Left Content Section */}
-          <div className=" max-w-[300px] lg:max-w-2xl space-y-10">
+          <div className="  max-w-[300px] lg:max-w-2xl space-y-10">
             {/* Main Heading with Blue/Cyan gradient to match floating lines */}
             <div className="space-y-2">
               <h1 className="text-2xl max-w-[300px] lg:max-w-2xl  lg:text-5xl font-black leading-[0.9] tracking-tight">
@@ -89,7 +87,7 @@ export default function Home() {
             <div className="relative">
               <div className="absolute -left-4 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-400/50 via-blue-400 to-cyan-400/50 shadow-lg shadow-cyan-500/30"></div>
               <h2 className="text-md  lg:text-xl text-slate-200 leading-relaxed pl-6 font-light">
-                A personal tech blog about coding, systems, mistakes, and real learning — no fluff, no fake productivity.
+                Write freely, read deeply, and share ideas that matter.
               </h2>
             </div>
 
@@ -142,29 +140,8 @@ export default function Home() {
                 {/* Dark gradient overlay with blue tint */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0a0e1a] via-blue-950/20 to-transparent pointer-events-none"></div>
                 
-                {/* Top corner accent with cyan theme */}
-                <div className="absolute top-8 right-8 pointer-events-none">
-                  <div className="flex items-center gap-2 px-4 py-2 bg-slate-900/80 backdrop-blur-md border border-cyan-500/30 rounded-full shadow-lg shadow-cyan-500/20">
-                    <div className="w-2 h-2 bg-cyan-400 rounded-full animate-pulse shadow-lg shadow-cyan-400/50"></div>
-                    <span className="text-white text-sm font-medium">Active</span>
-                  </div>
-                </div>
 
-                {/* Bottom info card with cyan accents */}
-                <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-[#0a0e1a] via-slate-900/95 to-transparent p-8 pointer-events-none">
-                  <div className="space-y-3">
-                    <div className="flex items-center gap-2 text-cyan-400 text-sm font-semibold">
-                      <div className="w-1 h-1 bg-cyan-400 rounded-full shadow-lg shadow-cyan-400/50"></div>
-                      <span>LATEST ARTICLE</span>
-                    </div>
-                    <h3 className="text-2xl font-bold text-white">Building Systems That Scale</h3>
-                    <p className="text-slate-300">Deep dive into distributed architecture and performance optimization</p>
-                    <div className="flex items-center gap-4 pt-2">
-                      <span className="text-xs px-3 py-1 bg-slate-800/80 text-cyan-300 rounded-full border border-cyan-500/30">Systems</span>
-                      <span className="text-xs px-3 py-1 bg-slate-800/80 text-blue-300 rounded-full border border-blue-500/30">15 min read</span>
-                    </div>
-                  </div>
-                </div>
+         
               </div>
             </div>
 

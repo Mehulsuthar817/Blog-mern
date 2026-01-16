@@ -70,7 +70,7 @@ export default function Profile() {
   const { user: profileUser, posts, totalPosts } = profile;
 
   const isOwnProfile = user && user._id === profileUser._id;
-  console.log(profile);
+ 
 
   const handleSave = async () => {
     try {
@@ -107,7 +107,7 @@ export default function Profile() {
               d="M10 19l-7-7m0 0l7-7m-7 7h18"
             />
           </svg>
-          Back to Authors
+          Back
         </button>
       </div>
 
@@ -180,6 +180,7 @@ export default function Profile() {
                 <input
                   type="text"
                   value={formData.name}
+                  placeholder="Name"
                   onChange={(e) =>
                     setFormData({ ...formData, name: e.target.value })
                   }
@@ -192,6 +193,7 @@ export default function Profile() {
             <p className="text-lg text-slate-300 mb-6 max-w-2xl">
               {editing && (
                 <textarea
+                placeholder="Bio"
                   value={formData.bio}
                   onChange={(e) =>
                     setFormData({ ...formData, bio: e.target.value })
@@ -296,7 +298,7 @@ export default function Profile() {
                     {/* Image */}
                     <div className="relative h-56 bg-gradient-to-br from-slate-800 to-slate-900 overflow-hidden">
                       <img
-                        src={`https://source.unsplash.com/800x600/?technology,coding&sig=${post._id}`}
+                        src={`${post.coverPhoto}`}
                         alt={post.title}
                         className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       />

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../api/axios.js";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import readingTime from "../utils/readingTime.js";
 
 export default function BlogList() {
@@ -8,7 +8,7 @@ export default function BlogList() {
   const [loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const limit = 10;
-
+  const location = useLocation();
   const fetchPost = async () => {
     try {
       setLoading(true);
@@ -35,14 +35,13 @@ export default function BlogList() {
       </div>
     );
   }
-  console.log(posts);
   return (
-    <div className="min-h-screen bg-[#0a0e1a] py-24 px-6">
+    <div className="w-full max-w-full bg-[#0a0e1a] py-24 px-6">
       {/* Subtle background effects */}
-      <div className="absolute top-40 right-20 w-96 h-96 bg-cyan-600/8 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-40 left-20 w-96 h-96 bg-blue-600/8 rounded-full blur-3xl"></div>
+      <div className="absolute top-40 right-20 w-100 h-96 bg-cyan-600/8 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-40 left-20 w-10 h-96 bg-blue-600/8 rounded-full blur-3xl"></div>
 
-      <div className="relative max-w-6xl mx-auto space-y-8">
+      <div className="w-full mx-auto space-y-8">
         {/* Header */}
         <div className="space-y-3">
           <h1 className="text-4xl lg:text-5xl font-bold text-white">
@@ -80,6 +79,7 @@ export default function BlogList() {
               key={post._id}
               to={`/blogs/${post._id}`}
               className="group block"
+              state={{ from: location.pathname + location.search }}
             >
               <div className="bg-slate-900/50 backdrop-blur-sm border border-slate-800/50 rounded-xl overflow-hidden hover:border-cyan-500/30 transition-all duration-300 h-full flex flex-col">
                 {/* Image */}
@@ -225,6 +225,13 @@ export default function BlogList() {
           </button>
         </div>
       </div>
+      <style jsx>
+        {`
+          // * {
+          //   outline: 1px solid red;
+          // }
+        `}
+      </style>
     </div>
   );
 }
