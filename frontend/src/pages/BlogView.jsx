@@ -160,7 +160,9 @@ export default function BlogView() {
                       day: "numeric",
                     })}
                     <span className="md:block hidden ">•</span>
-                    <span className="block md:inline ">{readingTime(post.content)}</span>
+                    <span className="block md:inline ">
+                      {readingTime(post.content)}
+                    </span>
                   </p>
                 </div>
               </div>
@@ -257,7 +259,7 @@ export default function BlogView() {
           prose-li:text-slate-300 prose-li:mb-2
           prose-img:rounded-xl prose-img:my-8 text-white "
         >
-          <ReactMarkdown remarkPlugins={[remarkGfm]}>
+          <ReactMarkdown className="markdown" remarkPlugins={[remarkGfm]}>
             {post.content}
           </ReactMarkdown>
         </article>
@@ -384,6 +386,61 @@ export default function BlogView() {
           )}
         </div>
       </div>
+      <style jsx>
+        {`
+          .markdown {
+            color: #e5e7eb;
+            line-height: 1.75;
+            font-size: 1rem;
+          }
+
+          .markdown h1,
+          .markdown h2,
+          .markdown h3 {
+            font-weight: 600;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            color: #ffffff;
+          }
+
+          .markdown h1 {
+            font-size: 2rem;
+          }
+
+          .markdown h2 {
+            font-size: 1.6rem;
+          }
+
+          .markdown p {
+            margin: 1rem 0;
+          }
+
+          .markdown ul {
+            list-style: disc;
+            margin-left: 1.5rem;
+          }
+
+          .markdown li {
+            margin: 0.5rem 0;
+          }
+
+          .markdown hr {
+            margin: 2.5rem 0;
+            opacity: 0.25;
+          }
+
+          .markdown strong {
+            color: #ffffff;
+          }
+
+          .markdown blockquote {
+            border-left: 3px solid #38bdf8;
+            padding-left: 1rem;
+            color: #cbd5f5;
+            margin: 1.5rem 0;
+          }
+        `}
+      </style>
     </div>
   );
 }
