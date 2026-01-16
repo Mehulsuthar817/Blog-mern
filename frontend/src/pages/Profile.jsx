@@ -307,7 +307,7 @@ export default function Profile() {
                       {/* Category Badge */}
                       <div className="absolute top-4 left-4">
                         <span className="px-3 py-1 bg-cyan-500 text-white text-xs font-semibold rounded">
-                          Technology
+                          {post.category}
                         </span>
                       </div>
                     </div>
@@ -318,9 +318,7 @@ export default function Profile() {
                         {post.title}
                       </h3>
                       <p className="text-sm text-slate-400 mb-4 line-clamp-2 flex-grow">
-                        {post.content
-                          ? post.content.substring(0, 120) + "..."
-                          : "Exploring technology and innovation..."}
+                        {post.excerpt}
                       </p>
 
                       {/* Footer */}

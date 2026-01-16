@@ -127,7 +127,7 @@ export const deletePost = async (req, res) => {
       return res.status(404).json({ message: "Post not found" });
     }
 
-    if (post.author.toString() !== req.user) {
+    if (post.author.toString() !== req.user.id) {
       return res.status(404).json({ message: "not Authorised" });
     }
 
