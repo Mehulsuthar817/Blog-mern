@@ -1,7 +1,6 @@
 @import "tailwindcss";
 
 
-
 @layer components{
     .iform{
         @apply border-2 border-b-black
